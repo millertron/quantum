@@ -4,15 +4,43 @@ import java.util.List;
 
 public class Personnel {
 
-    private final String fullName;
-    private final String alias;
-    private final List<String> affiliations;
+    private Long id;
+    private String fullName;
+    private String alias;
+    //private List<String> affiliations;
 
-    public Personnel(String fullName, String alias, List<String> affiliations) {
+    public Personnel(Long id,
+                     String fullName,
+                     String alias
+                     //List<String> affiliations
+    ) {
+        this.id = id;
         this.fullName = fullName;
         this.alias = alias;
-        this.affiliations = affiliations;
+        //this. affiliations = affiliations;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 }
