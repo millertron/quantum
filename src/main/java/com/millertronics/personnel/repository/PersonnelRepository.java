@@ -2,11 +2,14 @@ package com.millertronics.personnel.repository;
 
 import com.millertronics.personnel.domain.Personnel;
 import com.millertronics.personnel.domain.PersonnelBuilder;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import io.vertx.mutiny.pgclient.PgPool;
 import io.vertx.mutiny.sqlclient.Row;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+@ApplicationScoped
 public class PersonnelRepository {
 
     @Inject
@@ -22,8 +25,8 @@ public class PersonnelRepository {
     private Personnel convertRow(Row row) {
         return PersonnelBuilder.aPersonnel()
             .id(row.getLong("id"))
+            .fullName(row.getString("full_name"))
             .alias(row.getString("alias"))
-            .fullName(row.getString("fullName"))
             .build();
     }
 }
