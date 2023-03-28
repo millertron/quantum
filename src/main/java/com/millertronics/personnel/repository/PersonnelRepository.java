@@ -1,4 +1,4 @@
-package com.millertronics.repository;
+package com.millertronics.personnel.repository;
 
 import com.millertronics.personnel.domain.Personnel;
 import com.millertronics.personnel.domain.PersonnelBuilder;
