@@ -1,0 +1,7 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    username: ${PG_USERNAME}
+    password: ${PG_PASSWORD}
+    reactive:
+      url: ${PG_URI}
