@@ -14,7 +14,6 @@ public class PostgresConfig {
     @Inject
     PgPool client;
 
-    @Inject
     @ConfigProperty(name = "quantum.schema.create", defaultValue = "true")
     public boolean schemaCreate;
 
