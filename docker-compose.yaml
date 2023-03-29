@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: quantum_user
+      POSTGRES_PASSWORD: quantum_password
+      POSTGRES_DB: quantum
+
+  quantum:
+    build:
+      context: .
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8100:8080"
+    depends_on:
+      - postgres
+    environment:
+      QUANTUM_PG_USERNAME: quantum_user
+      QUANTUM_PG_PASSWORD: quantum_password
+      QUANTUM_PG_URI: postgresql://postgres/quantum
+
