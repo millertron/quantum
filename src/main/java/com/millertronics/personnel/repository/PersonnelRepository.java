@@ -32,6 +32,13 @@ public class PersonnelRepository {
             .onItem().transform(row -> row.getLong("id"));
     }
 
+    public Uni<Boolean> delete(Long id) {
+        return client.preparedQuery("DELETE FROM personnel WHERE id = $1")
+            .execute(Tuple.of(id))
+            .onItem()
+            .transform(rowSet -> rowSet.rowCount() == 1);
+    }
+
     private Personnel convertRow(Row row) {
         return PersonnelBuilder.aPersonnel()
             .id(row.getLong("id"))
