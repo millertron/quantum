@@ -21,6 +21,12 @@ public class PersonnelResource {
         return personnelRepository.findAll();
     }
 
+    @GET
+    @Path("{id}")
+    public Uni<Personnel> findById(Long id) {
+        return personnelRepository.findById(id);
+    }
+
     @POST
     public Uni<Long> create(Personnel personnel) {
         return personnelRepository.save(personnel);

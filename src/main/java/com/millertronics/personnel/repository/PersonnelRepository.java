@@ -24,6 +24,13 @@ public class PersonnelRepository {
             .onItem().transform(this::convertRow);
     }
 
+    public Uni<Personnel> findById(Long id) {
+        return client.preparedQuery("SELECT * FROM personnel WHERE id = $1").execute(Tuple.of(id))
+            .onItem().transform(RowSet::iterator)
+            .onItem().transform(RowIterator::next)
+            .onItem().transform(this::convertRow);
+    }
+
     public Uni<Long> save(Personnel personnel) {
         return client.preparedQuery("INSERT INTO personnel (full_name, alias) VALUES ($1, $2) RETURNING id")
             .execute(Tuple.of(personnel.getFullName(), personnel.getAlias()))
