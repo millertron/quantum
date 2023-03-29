@@ -21,29 +21,28 @@ public class PersonnelRepository {
     public Multi<Personnel> findAll() {
         return client.query("SELECT * FROM personnel ORDER BY id ASC").execute()
             .onItem().transformToMulti(set -> Multi.createFrom().iterable(set))
-            .onItem().transform(this::convertRow);
+            .map(this::convertRow);
     }
 
     public Uni<Personnel> findById(Long id) {
         return client.preparedQuery("SELECT * FROM personnel WHERE id = $1").execute(Tuple.of(id))
-            .onItem().transform(RowSet::iterator)
-            .onItem().transform(RowIterator::next)
-            .onItem().transform(this::convertRow);
+            .map(RowSet::iterator)
+            .map(RowIterator::next)
+            .map(this::convertRow);
     }
 
     public Uni<Long> save(Personnel personnel) {
         return client.preparedQuery("INSERT INTO personnel (full_name, alias) VALUES ($1, $2) RETURNING id")
             .execute(Tuple.of(personnel.getFullName(), personnel.getAlias()))
-            .onItem().transform(RowSet::iterator)
-            .onItem().transform(RowIterator::next)
-            .onItem().transform(row -> row.getLong("id"));
+            .map(RowSet::iterator)
+            .map(RowIterator::next)
+            .map(row -> row.getLong("id"));
     }
 
     public Uni<Boolean> delete(Long id) {
         return client.preparedQuery("DELETE FROM personnel WHERE id = $1")
             .execute(Tuple.of(id))
-            .onItem()
-            .transform(rowSet -> rowSet.rowCount() == 1);
+            .map(rowSet -> rowSet.rowCount() == 1);
     }
 
     private Personnel convertRow(Row row) {
